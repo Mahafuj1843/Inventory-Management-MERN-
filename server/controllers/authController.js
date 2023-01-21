@@ -54,3 +54,24 @@ export const logout = async (req,res,next) =>{
         next(err)
     }
 }
+
+export const changePassword = async (req,res,next) =>{
+    try{
+        if(req.body.newPassword.length<6 || req.body.newPassword.length>12)
+            return next(createError(401, "Password must be 6 to 12 characters."));
+        else{
+            const user = await User.findById(req.user.id);
+            const isPasswordCorrect = await bcrypt.compare(req.body.oldPassword, user.password);
+            if(!isPasswordCorrect) return next(createError(400, "Wrong password!"))
+            else{
+                const salt = bcrypt.genSaltSync(10);
+                const hash = bcrypt.hashSync(req.body.newPassword, salt);
+                user.password = hash;
+                await user.save();
+                res.status(200).send("Password change successful.");
+            }
+        }
+    }catch(err){
+        next(err);
+    }
+}
