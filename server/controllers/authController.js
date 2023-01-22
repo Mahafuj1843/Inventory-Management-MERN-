@@ -1,7 +1,11 @@
-import User from '../models/User.js'
 import bcrypt from 'bcryptjs'
-import {createError} from '../utils/error.js'
+import crypto from 'crypto';
 import jwt from 'jsonwebtoken'
+import {createError} from '../utils/error.js'
+import User from '../models/User.js'
+import Token from '../models/Token.js'
+import { resetPasswordMsg } from '../utils/mailGenerator/resetPassword.js';
+import { sendEmail } from '../utils/mail.js';
 
 export const register = async (req,res,next) =>{
     try{
@@ -69,6 +73,43 @@ export const changePassword = async (req,res,next) =>{
                 user.password = hash;
                 await user.save();
                 res.status(200).send("Password change successful.");
+            }
+        }
+    }catch(err){
+        next(err);
+    }
+}
+
+export const forgotPassword = async (req,res,next) =>{
+    try{
+        const user = await User.findOne({ email: req.body.email });
+        if(!user)
+            return next(createError(404, "User does not exist."));
+        else{
+            let token = await Token.findOne({ userId: user._id });
+            if (token) {
+                await token.deleteOne();
+            }else{
+                let resetToken = crypto.randomBytes(32).toString("hex") + user._id;
+
+                const salt = bcrypt.genSaltSync(10);
+                const hashedToken = bcrypt.hashSync(resetToken, salt);
+
+                await new Token({
+                    userId: user._id,
+                    token: hashedToken,
+                    createdAt: Date.now(),
+                    expiresAt: Date.now() + 10 * (60 * 1000), // 10 minutes
+                }).save();
+
+                const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
+
+                const message = resetPasswordMsg(resetUrl, user.username);
+                const subject = "Reset Password Request";
+                const send_to = user.email;
+
+                await sendEmail(subject, message, send_to);
+                res.status(200).send("Reset Email Sent successfully." );
             }
         }
     }catch(err){
