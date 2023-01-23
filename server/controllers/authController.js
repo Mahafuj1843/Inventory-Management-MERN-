@@ -6,6 +6,7 @@ import User from '../models/User.js'
 import Token from '../models/Token.js'
 import { resetPasswordMsg } from '../utils/mailGenerator/resetPassword.js';
 import { sendEmail } from '../utils/mail.js';
+import { hash } from '../utils/hash.js';
 
 export const register = async (req, res, next) => {
     try {
@@ -14,14 +15,11 @@ export const register = async (req, res, next) => {
         else if (req.body.password.length < 6 || req.body.password.length > 12)
             return next(createError(401, "Password must be 6 to 12 characters."));
         else {
-            const salt = bcrypt.genSaltSync(10);
-            const hash = bcrypt.hashSync(req.body.password, salt);
-
             const newUser = new User({
                 fullname: req.body.fullname,
                 username: req.body.username,
                 email: req.body.email,
-                password: hash,
+                password: hash(req.body.password),
             })
             await newUser.save();
             const token = jwt.sign({ id: newUser._id, isAdmin: newUser.isAdmin }, process.env.JWT)
@@ -68,9 +66,7 @@ export const changePassword = async (req, res, next) => {
             const isPasswordCorrect = await bcrypt.compare(req.body.oldPassword, user.password);
             if (!isPasswordCorrect) return next(createError(400, "Wrong password!"))
             else {
-                const salt = bcrypt.genSaltSync(10);
-                const hash = bcrypt.hashSync(req.body.newPassword, salt);
-                user.password = hash;
+                user.password = hash(req.body.newPassword);
                 await user.save();
                 res.status(200).send("Password change successful.");
             }
@@ -92,14 +88,16 @@ export const forgotPassword = async (req, res, next) => {
             }
             let resetToken = crypto.randomBytes(32).toString("hex") + user._id;
 
-            const salt = bcrypt.genSaltSync(10);
-            const hashedToken = bcrypt.hashSync(resetToken, salt);
+            const hashedToken = crypto
+                .createHash("sha256")
+                .update(resetToken)
+                .digest("hex");
 
             await new Token({
                 userId: user._id,
                 token: hashedToken,
                 createdAt: Date.now(),
-                expiresAt: Date.now() + 10 * (60 * 1000), // 10 minutes
+                expiresAt: Date.now() + 5 * (60 * 1000), // 5 minutes
             }).save();
 
             const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
@@ -110,6 +108,35 @@ export const forgotPassword = async (req, res, next) => {
 
             await sendEmail(subject, message, send_to);
             res.status(200).send("Reset Email Sent successfully.");
+        }
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const resetPassword = async (req, res, next) => {
+    try {
+        if (req.body.password.length < 6 || req.body.password.length > 12)
+            return next(createError(401, "Password must be 6 to 12 characters."));
+        else {
+            const hashedToken = crypto
+                .createHash("sha256")
+                .update(req.params.resetToken)
+                .digest("hex");
+
+            const userToken = await Token.findOne({
+                token: hashedToken,
+                expiresAt: { $gt: Date.now() },
+            });
+
+            if (!userToken)
+                return next(createError(404, "Invalid or Expired Token."));
+            else {
+                const user = await User.findOne({ _id: userToken.userId });
+                user.password = hash(req.body.password);
+                await user.save();
+                res.status(200).send("Password reset successful.");
+            }
         }
     } catch (err) {
         next(err);
