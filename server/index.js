@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import authRouter from './routes/auth.js'
 import usersRouter from './routes/users.js'
-// import hotelsRouter from './routes/hotels.js'
+import productsRouter from './routes/products.js'
 // import roomsRouter from './routes/rooms.js'
 import cookieParser from 'cookie-parser'
 
@@ -31,7 +31,7 @@ app.use(express.json())
 
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
-// app.use('/hotels', hotelsRouter);
+app.use('/products', productsRouter);
 // app.use('/rooms', roomsRouter);
 
 app.use((err, req, res, next)=>{

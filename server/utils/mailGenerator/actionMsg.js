@@ -1,6 +1,6 @@
 import Mailgen from 'mailgen'
 
-export const resetPasswordMsg = (url, username) =>{
+export const msgBody = (msg) =>{
     var mailGenerator = new Mailgen({
         theme: 'default',
         product: {
@@ -9,20 +9,20 @@ export const resetPasswordMsg = (url, username) =>{
             link: 'https://mailgen.js/'
         }
     });
-    
+
     var response = {
         body: {
-            name: username,
-            intro: 'Please use the button below to reset your password.',
+            name: msg.name,
+            intro: msg.intro,
             action: {
-                instructions: 'To reset your password, please click here:',
+                instructions: msg.instructions,
                 button: {
-                    color: '#22BC66', // Optional action button color
-                    text: 'Reset your password',
-                    link: url
+                    color: msg.color,
+                    text: msg.text,
+                    link: msg.link
                 }
             },
-            outro: 'This reset button is valid for only 10 minutes.'
+            outro: msg.outro
         }
     };
 

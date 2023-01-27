@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import { createError } from '../utils/error.js'
 import User from '../models/User.js'
 import Token from '../models/Token.js'
-import { resetPasswordMsg } from '../utils/mailGenerator/resetPassword.js';
+import { msgBody } from '../utils/mailGenerator/actionMsg.js';
 import { sendEmail } from '../utils/mail.js';
 import { hash } from '../utils/hash.js';
 
@@ -102,7 +102,17 @@ export const forgotPassword = async (req, res, next) => {
 
             const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
 
-            const message = resetPasswordMsg(resetUrl, user.username);
+            let mailBody = {
+                name: user.username,
+                intro: 'You have received this email because a password reset request for your account was received.',
+                instructions: 'Click the button below to reset your password:',
+                color: '#DC4D2F',
+                text: 'Reset your password',
+                link: resetUrl,
+                outro: 'This reset button is valid for only 10 minutes.\n If you did not request a password reset, no further action is required on your part.'
+              };
+
+            const message = msgBody(mailBody);
             const subject = "Reset Password Request";
             const send_to = user.email;
 
