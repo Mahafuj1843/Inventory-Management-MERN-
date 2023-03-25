@@ -38,8 +38,18 @@ export const updateUser = async (req,res,next) =>{
             req.params.id,
             { $set : req.body}, 
             { new : true});
-        res.status(200).json(updatedUser)
+        const { _id,password, tokens, createdAt, ...otherDetails } = updatedUser._doc;
+        res.status(200).json({ data: {...otherDetails}})
     }catch(err){
+        next(err);
+    }
+}
+
+export const profileDetails = async (req, res, next) => {
+    try {
+        const userProfile = await User.findById(req.user.id,{ _id:0,token:0,password:0,isVerified:0,createdAt:0,updatedAt:0});
+        res.status(200).json({ data: userProfile })
+    } catch (err) {
         next(err);
     }
 }

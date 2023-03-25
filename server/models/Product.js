@@ -6,12 +6,6 @@ const ProductSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    slug:{
-        type: String,
-        required: true,
-        unique: true,
-        lowercase: true
-    },
     desc:{
         type: String,
         required: true
@@ -20,14 +14,14 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    category:{
+    categoryId:{
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: "Category",
     },
-    brand:{
+    brandId:{
         type: mongoose.Schema.Types.ObjectId,
-        // required: true,
+        required: true,
         ref: "Brand",
     },
     quantity:{
@@ -41,17 +35,14 @@ const ProductSchema = new mongoose.Schema({
     image:{
         type: String
     },
-    color:{
+    unit:{
         type: String,
-        colors: ["Black", "White", "Red", "Blue", "Navy Blue", "Green", "Brown", "Ash", "Pink"]
+        require: true
     },
-    rating: [
-        { ratings: Number, 
-          review: String,  
-          postedBy: {type: mongoose.Schema.Types.ObjectId, ref: "User" },
-          date: {type: Date}
-        }
-    ],
+    userId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    }
   },{timestamps: true}
   );
 
