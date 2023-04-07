@@ -2,6 +2,7 @@ import Return from "../models/Return/Return.js"
 import ReturnProduct from "../models/Return/ReturnProduct.js"
 import { oneJoinlistService } from "../services/common/oneJoinService.js"
 import { parentChildCreateService, parentChildDeleteService } from "../services/common/parentChildService.js"
+import { parentChildsById } from "../services/common/parentChildsById.js"
 import { summaryService } from "../services/common/summary.js"
 import { threeJoinReportService } from "../services/report/reportService.js"
 
@@ -21,6 +22,12 @@ export const listReturn = async (req,res,next) =>{
 
 export const deleteReturn = async (req,res,next) =>{
     let result = await parentChildDeleteService(req, Return, ReturnProduct, 'returnId')
+    if(result) res.status(200).json(result)
+}
+
+export const returnProducts = async (req, res) =>{
+    let joinStage = {$lookup: {from: 'products', localField: 'productId', foreignField: '_id', as: 'Product'}}
+    let result = await parentChildsById(req, ReturnProduct, 'returnId', joinStage)
     if(result) res.status(200).json(result)
 }
 

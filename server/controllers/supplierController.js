@@ -2,6 +2,7 @@ import mongoose from "mongoose"
 import Supplier from "../models/Supplier.js"
 import Purchase from "../models/Purchase/Purchase.js"
 import { CheckAssociateService } from "../services/common/checkAssociationService.js"
+import { detailsByIDService } from "../services/common/detailsByIdService.js"
 import { createService, deleteService, dropDownService, listService, updateService } from '../services/common/createService.js'
 
 export const createSupplier = async (req,res,next) =>{
@@ -23,6 +24,11 @@ export const deleteSupplier = async (req,res,next) =>{
         let Result=await deleteService(req, Supplier);
         if(Result) res.status(200).send("Supplier has been Deleted.")
     }
+}
+
+export const supplierDetailsById = async (req,res,next) =>{
+    let result =await detailsByIDService(req, Supplier)
+    if(result) res.status(200).json(result)
 }
 
 export const listSupplier = async (req,res,next) =>{

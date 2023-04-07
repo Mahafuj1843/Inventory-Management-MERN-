@@ -6,13 +6,16 @@ const SalesSchema = new mongoose.Schema({
         ref: "Customer",
     },
     vatTax:{
-        type:Number
+        type:Number,
+        default: 0
     },
     discount:{
-        type:Number
+        type:Number,
+        default: 0
     },
     otherCost:{
-        type:Number
+        type:Number,
+        default: 0
     },
     shippingCost:{
         type:Number,
@@ -22,8 +25,9 @@ const SalesSchema = new mongoose.Schema({
         type:Number,
         require: true
     },
-    note:{
-        type:String
+    grantTotal:{
+        type:Number,
+        require:true,
     },
     userId:{
         type: mongoose.Schema.Types.ObjectId,

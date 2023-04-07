@@ -4,7 +4,8 @@ import SalesProduct from "../models/Sales/SalesProduct.js"
 import PurchaseProduct from "../models/Purchase/PurchaseProduct.js"
 import ReturnProduct from "../models/Return/ReturnProduct.js"
 import { CheckAssociateService } from '../services/common/checkAssociationService.js';
-import { createService, deleteService, updateService } from '../services/common/createService.js'
+import { detailsByIDService } from "../services/common/detailsByIdService.js"
+import { createService, deleteService, updateService, dropDownService } from '../services/common/createService.js'
 import { twoJoinlistService } from '../services/common/twoJoinService.js';
 import { createError } from "../utils/error.js";
 import mongoose from 'mongoose'
@@ -12,6 +13,11 @@ import mongoose from 'mongoose'
 export const createProduct = async (req, res, next) => {
     let result = await createService(req, Product)
     if (result) res.status(200).send('Product has been created.')
+}
+
+export const productDetailsById = async (req,res,next) =>{
+    let result =await detailsByIDService(req, Product)
+    if(result) res.status(200).json(result)
 }
 
 export const updateProduct = async (req, res, next) => {
@@ -95,4 +101,9 @@ export const deleteProduct = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
+}
+
+export const productDropdown = async (req,res,next) =>{
+    let result =await dropDownService(req, Product, {_id:1, title:1})
+    if(result) res.status(200).json(result)
 }

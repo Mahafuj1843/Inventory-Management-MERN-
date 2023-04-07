@@ -2,6 +2,7 @@ import ExpenseType from "../models/Expense/ExpenseType.js"
 import Expense from "../models/Expense/Expense.js"
 import { createService, deleteService, dropDownService, listService, updateService } from '../services/common/createService.js'
 import { oneJoinlistService } from "../services/common/oneJoinService.js"
+import { detailsByIDService } from "../services/common/detailsByIdService.js"
 import { CheckAssociateService } from "../services/common/checkAssociationService.js"
 import { expenseReportService } from "../services/report/reportService.js"
 import mongoose from "mongoose"
@@ -15,6 +16,11 @@ export const createExpenseType = async (req,res,next) =>{
 export const updateExpenseType = async (req,res,next) =>{
     let result =await updateService(req, ExpenseType)
     if(result) res.status(200).send('ExpenseType has been updated.')
+}
+
+export const expenseTypeDetailsById = async (req,res,next) =>{
+    let result =await detailsByIDService(req, ExpenseType)
+    if(result) res.status(200).json(result)
 }
 
 export const deleteExpenseType = async (req,res,next) =>{
@@ -43,6 +49,11 @@ export const expenseTypeDropdown = async (req,res,next) =>{
 export const createExpense = async (req,res,next) =>{
     let result =await createService(req, Expense)
     if(result) res.status(200).send('Expense has been created.')
+}
+
+export const expenseDetailsById = async (req,res,next) =>{
+    let result =await detailsByIDService(req, Expense)
+    if(result) res.status(200).json(result)
 }
 
 export const updateExpense = async (req,res,next) =>{

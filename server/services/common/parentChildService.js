@@ -7,9 +7,15 @@ export const parentChildCreateService = async (Req, PModel, CModel, JoinProperty
     try {
         // Start Transaction
         await session.startTransaction()
-
-        let parent = Req.body.parent
+	
+	const cartTotal = Req.body.childs.map(x => x.price * x.qty).reduce((prev, curr) => prev + curr, 0)
+	let parent = Req.body.parent
+        let grantTotal = Number((cartTotal * (parent.vatTax / 100)).toFixed(2)) + Number(parent.otherCost) + Number(parent.shippingCost) + Number((cartTotal - (cartTotal * (parent.discount / 100))).toFixed(2))
+   
         parent.userId = Req.user.id
+	parent.total = cartTotal
+	parent.grantTotal = grantTotal
+
         let createParent = await PModel.create([parent], {session})
 
                 let childs = Req.body.childs

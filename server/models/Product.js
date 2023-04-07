@@ -10,9 +10,9 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    price:{
-        type: Number,
-        required: true
+    unit:{
+        type: String,
+        require: true
     },
     categoryId:{
         type: mongoose.Schema.Types.ObjectId,
@@ -23,21 +23,6 @@ const ProductSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "Brand",
-    },
-    quantity:{
-        type: Number,
-        required: true
-    },
-    sold:{
-        type: Number,
-        default: 0
-    },
-    image:{
-        type: String
-    },
-    unit:{
-        type: String,
-        require: true
     },
     userId:{
         type: mongoose.Schema.Types.ObjectId,

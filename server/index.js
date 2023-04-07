@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
+import cors from 'cors'
 import authRouter from './routes/auth.js'
 import usersRouter from './routes/users.js'
 import productsRouter from './routes/products.js'
@@ -33,20 +34,21 @@ mongoose.connection.on("disconnected", ()=>{
 })
 
 //middlewares
+app.use(cors())
 app.use(cookieParser())
 app.use(express.json())
 
-app.use('/auth', authRouter);
-app.use('/users', usersRouter);
-app.use('/products', productsRouter);
-app.use('/brands', brandsRouter);
-app.use('/categories', categoriesRouter);
-app.use('/customers', customersRouter);
-app.use('/suppliers', suppliersRouter);
-app.use('/expenses', expensesRouter);
-app.use('/purchases', purchasesRouter);
-app.use('/sales', salesRouter);
-app.use('/returns', returnsRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/products', productsRouter);
+app.use('/api/brands', brandsRouter);
+app.use('/api/categories', categoriesRouter);
+app.use('/api/customers', customersRouter);
+app.use('/api/suppliers', suppliersRouter);
+app.use('/api/expenses', expensesRouter);
+app.use('/api/purchases', purchasesRouter);
+app.use('/api/sales', salesRouter);
+app.use('/api/returns', returnsRouter);
 
 app.use((err, req, res, next)=>{
   const errorStatus = err.status || 500

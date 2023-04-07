@@ -2,6 +2,7 @@ import Purchase from "../models/Purchase/Purchase.js"
 import PurchaseProduct from "../models/Purchase/PurchaseProduct.js"
 import { oneJoinlistService } from "../services/common/oneJoinService.js"
 import { parentChildCreateService, parentChildDeleteService } from "../services/common/parentChildService.js"
+import { parentChildsById } from "../services/common/parentChildsById.js"
 import { summaryService } from "../services/common/summary.js"
 import { threeJoinReportService } from "../services/report/reportService.js"
 
@@ -21,6 +22,12 @@ export const listPurchase = async (req,res,next) =>{
 
 export const deletePurchase = async (req,res,next) =>{
     let result = await parentChildDeleteService(req, Purchase, PurchaseProduct, 'purchaseId')
+    if(result) res.status(200).json(result)
+}
+
+export const purchaseProducts = async (req, res) =>{
+    let joinStage = {$lookup: {from: 'products', localField: 'productId', foreignField: '_id', as: 'Product'}}
+    let result = await parentChildsById(req, PurchaseProduct, 'purchaseId', joinStage)
     if(result) res.status(200).json(result)
 }
 
