@@ -79,7 +79,7 @@ export const deleteSupplierRequest = async (Id) =>{
         const result = await axios.delete(url, AxiosHeader);
         store.dispatch(hideLoader())
         if(result.status === 200 && result.data.status === 'associate'){
-            ErrorToast(result.data.msg)
+            ErrorToast(result.data.data)
             return false
         }else if(result.status === 200){
             SuccessToast("Supplier has been Deleted.")

@@ -86,7 +86,7 @@ const PurchaseList = () => {
                                         </div>
 
                                         <div className="col-2">
-                                            <select onChange={onChangePerPage} className="form-control mx-2 form-select-sm form-select form-control-sm" >
+                                            <select onChange={onChangePerPage} className="mx-2 form-select-sm form-select" >
                                                 <option value="5">5 Per Page</option>
                                                 <option value="10">10 Per Page</option>
                                                 <option value="20">20 Per Page</option>
@@ -96,7 +96,7 @@ const PurchaseList = () => {
                                         </div>
                                         <div className="col-4">
                                             <div className="input-group mb-3">
-                                                <input onChange={onChangeSearchKeyword} type="text" className="form-control form-control-sm" placeholder="Search.." aria-label="Recipient's username" aria-describedby="button-addon2" />
+                                                <input onChange={onChangeSearchKeyword} type="search" className="form-control form-control-sm" placeholder="Search.." aria-label="Recipient's username" aria-describedby="button-addon2" />
                                                 <button onClick={onSearch} className="btn  btn-success btn-sm mb-0" type="button">Search</button>
                                             </div>
                                         </div>

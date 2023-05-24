@@ -1,16 +1,17 @@
 import React, { Fragment, useRef } from 'react';
 import { Accordion, Container, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import {AiOutlineBank, AiOutlineLogout, AiOutlineMenu, AiOutlineUser, AiOutlineUnorderedList} from 'react-icons/ai';
-import {BsBagPlus, BsBagX, BsBox, BsCartPlus, BsCircle, BsGraphUp, BsPeople} from 'react-icons/bs';
-import {HiMenuAlt2} from 'react-icons/hi';
-import {BiCategory} from 'react-icons/bi'
-import {RiDashboardLine} from 'react-icons/ri'
-import {TbTruckDelivery, TbBrandBooking} from 'react-icons/tb'
-import logo from "../../Assets/images/Logo.svg"
-import {getUserDetails, removeSessions} from "../../helper/sessionHelper";
+import { AiOutlineBank, AiOutlineLogout, AiOutlineUser, AiOutlineUnorderedList } from 'react-icons/ai';
+import { BsBagPlus, BsBagX, BsBox, BsCartPlus, BsCircle, BsGraphUp, BsPeople } from 'react-icons/bs';
+import { MdPassword } from 'react-icons/md'
+import { HiMenuAlt2 } from 'react-icons/hi';
+import { BiCategory } from 'react-icons/bi'
+import { RiDashboardLine } from 'react-icons/ri'
+import { TbTruckDelivery, TbBrandBooking } from 'react-icons/tb'
+import logo from '../../Assets/images/data-warehouse.png'
+import { getUserDetails, removeSessions } from "../../helper/sessionHelper";
 const MasterLayout = (props) => {
-  let contentRef, sideNavRef,topNavRef = useRef();
+  let contentRef, sideNavRef, topNavRef = useRef();
 
   const MenuBarClickHandler = () => {
     let sideNav = sideNavRef;
@@ -37,13 +38,13 @@ const MasterLayout = (props) => {
     let urlList = [];
     sidebarItems.map((item) => {
       urlList.push(
-          item.subMenu.map((subItem) => {
-            return subItem?.url;
-          })
+        item.subMenu.map((subItem) => {
+          return subItem?.url;
+        })
       );
     });
     return urlList.findIndex((items) =>
-        items.includes(window.location.pathname)
+      items.includes(window.location.pathname)
     );
   };
 
@@ -56,7 +57,7 @@ const MasterLayout = (props) => {
     },
     {
       title: 'Customer',
-      icon: <BsPeople  className="side-bar-item-icon" />,
+      icon: <BsPeople className="side-bar-item-icon" />,
       url: '/Customer',
       subMenu: [
         {
@@ -67,7 +68,7 @@ const MasterLayout = (props) => {
         {
           title: 'Customer List',
           icon: (
-              <BsCircle size={16} className="side-bar-subitem-icon" />
+            <BsCircle size={16} className="side-bar-subitem-icon" />
           ),
           url: '/CustomerListPage',
         },
@@ -86,7 +87,7 @@ const MasterLayout = (props) => {
         {
           title: 'Supplier List',
           icon: (
-              <BsCircle size={16} className="side-bar-subitem-icon" />
+            <BsCircle size={16} className="side-bar-subitem-icon" />
           ),
           url: '/SupplierListPage',
         },
@@ -94,7 +95,7 @@ const MasterLayout = (props) => {
     },
     {
       title: 'Expense',
-      icon: <AiOutlineBank  className="side-bar-item-icon" />,
+      icon: <AiOutlineBank className="side-bar-item-icon" />,
       url: '/Expense',
       subMenu: [
         {
@@ -105,7 +106,7 @@ const MasterLayout = (props) => {
         {
           title: 'Expense Type List',
           icon: (
-              <BsCircle size={16} className="side-bar-subitem-icon" />
+            <BsCircle size={16} className="side-bar-subitem-icon" />
           ),
           url: '/ExpenseTypeListPage',
         },
@@ -117,49 +118,49 @@ const MasterLayout = (props) => {
         {
           title: 'Expense List',
           icon: (
-              <AiOutlineUnorderedList size={16} className="side-bar-subitem-icon" />
+            <AiOutlineUnorderedList size={16} className="side-bar-subitem-icon" />
           ),
           url: '/ExpenseListPage',
         },
       ],
     },
     {
-        title: 'Category',
-        icon: <BiCategory  className="side-bar-item-icon" />,
-        url: '/Category',
-        subMenu: [
-          {
-            title: 'New Category',
-            icon: <BsCircle size={16} className="side-bar-subitem-icon" />,
-            url: '/CategoryCreateUpdatePage',
-          },
-          {
-            title: 'Category List',
-            icon: (
-                <BsCircle size={16} className="side-bar-subitem-icon" />
-            ),
-            url: '/CategoryListPage',
-          }
-        ],
+      title: 'Category',
+      icon: <BiCategory className="side-bar-item-icon" />,
+      url: '/Category',
+      subMenu: [
+        {
+          title: 'New Category',
+          icon: <BsCircle size={16} className="side-bar-subitem-icon" />,
+          url: '/CategoryCreateUpdatePage',
+        },
+        {
+          title: 'Category List',
+          icon: (
+            <BsCircle size={16} className="side-bar-subitem-icon" />
+          ),
+          url: '/CategoryListPage',
+        }
+      ],
     },
     {
-        title: 'Brand',
-        icon: <TbBrandBooking size={18}  className="side-bar-item-icon" />,
-        url: '/Brand',
-        subMenu: [
-          {
-            title: 'New Brand',
-            icon: <BsCircle size={16} className="side-bar-subitem-icon" />,
-            url: '/BrandCreateUpdatePage',
-          },
-          {
-            title: 'Brand List',
-            icon: (
-                <BsCircle size={16} className="side-bar-subitem-icon" />
-            ),
-            url: '/BrandListPage',
-          }
-        ],
+      title: 'Brand',
+      icon: <TbBrandBooking size={18} className="side-bar-item-icon" />,
+      url: '/Brand',
+      subMenu: [
+        {
+          title: 'New Brand',
+          icon: <BsCircle size={16} className="side-bar-subitem-icon" />,
+          url: '/BrandCreateUpdatePage',
+        },
+        {
+          title: 'Brand List',
+          icon: (
+            <BsCircle size={16} className="side-bar-subitem-icon" />
+          ),
+          url: '/BrandListPage',
+        }
+      ],
     },
     {
       title: 'Product',
@@ -173,7 +174,7 @@ const MasterLayout = (props) => {
         },
         {
           title: 'Product List',
-          icon: <BsCircle  size={16} className="side-bar-subitem-icon" />,
+          icon: <BsCircle size={16} className="side-bar-subitem-icon" />,
           url: '/ProductListPage',
         },
       ],
@@ -191,7 +192,7 @@ const MasterLayout = (props) => {
         {
           title: 'Purchase List',
           icon: (
-              <BsCircle size={16} className="side-bar-subitem-icon" />
+            <BsCircle size={16} className="side-bar-subitem-icon" />
           ),
           url: '/PurchaseListPage',
         },
@@ -204,13 +205,13 @@ const MasterLayout = (props) => {
       subMenu: [
         {
           title: 'New Sale',
-          icon: <BsCircle  size={16} className="side-bar-subitem-icon" />,
+          icon: <BsCircle size={16} className="side-bar-subitem-icon" />,
           url: '/SalesCreateUpdatePage',
         },
         {
           title: 'Sale List',
           icon: (
-              <BsCircle size={16} className="side-bar-subitem-icon" />
+            <BsCircle size={16} className="side-bar-subitem-icon" />
           ),
           url: '/SalesListPage',
         },
@@ -262,110 +263,117 @@ const MasterLayout = (props) => {
     },
   ];
 
-  const onLogout=()=>{
+  const onLogout = () => {
     removeSessions();
   }
   return (
-      <Fragment>
-        <Navbar className="fixed-top px-0 ">
-          <Container fluid={true}>
+    <Fragment>
+      <Navbar className="fixed-top px-0 ">
+        <Container fluid={true}>
 
-            <Navbar.Brand>
-              <div ref={(div) => {topNavRef = div}} className="top-nav-open">
-                <h4 className="text-white m-0 p-0"><a onClick={MenuBarClickHandler}><HiMenuAlt2 /></a></h4>
-              </div>
-            </Navbar.Brand>
+          <Navbar.Brand>
+            <div ref={(div) => { topNavRef = div }} className="top-nav-open">
+              <h4 className="text-white m-0 p-0"><a onClick={MenuBarClickHandler}><HiMenuAlt2 /></a></h4>
+            </div>
+          </Navbar.Brand>
 
-            <div className="h-auto d-flex align-items-center">
-              <div className="user-dropdown">
-                <img className="icon-nav-img icon-nav" src={getUserDetails()['photo']} alt=""/>
-                <div className="user-dropdown-content ">
-                  <div className="mt-4 text-center">
-                    <img className="icon-nav-img" src={getUserDetails()['photo']} alt=""/>
-                    <h6>{getUserDetails()['username']}</h6>
-                    <hr className="user-dropdown-divider  p-0"/>
-                  </div>
-                  <NavLink to="/Profile" className="side-bar-item">
-                    <AiOutlineUser className="side-bar-item-icon" />
-                    <span className="side-bar-item-caption">Profile</span>
-                  </NavLink>
-                  <a onClick={onLogout}  className="side-bar-item">
-                    <AiOutlineLogout className="side-bar-item-icon" />
-                    <span className="side-bar-item-caption">Logout</span>
-                  </a>
+          <div className="h-auto d-flex align-items-center">
+            <div className="user-dropdown">
+              <img className="icon-nav-img icon-nav" src={getUserDetails()['photo']} alt="" />
+              <div className="user-dropdown-content ">
+                <div className="mt-4 text-center">
+                  <img className="icon-nav-img" src={getUserDetails()['photo']} alt="" />
+                  <h6>{getUserDetails()['username']}</h6>
+                  <hr className="user-dropdown-divider  p-0" />
                 </div>
+                <NavLink to="/Profile" className="side-bar-item">
+                  <AiOutlineUser className="side-bar-item-icon" />
+                  <span className="side-bar-item-caption">Profile</span>
+                </NavLink>
+                <NavLink to="/ChangePassword" className="side-bar-item">
+                  <MdPassword className="side-bar-item-icon" />
+                  <span className="side-bar-item-caption">Change Password</span>
+                </NavLink>
+                <a onClick={onLogout} className="side-bar-item">
+                  <AiOutlineLogout className="side-bar-item-icon" />
+                  <span className="side-bar-item-caption">Logout</span>
+                </a>
               </div>
             </div>
+          </div>
 
-          </Container>
-        </Navbar>
+        </Container>
+      </Navbar>
 
-        <div ref={(div) => {sideNavRef = div}} className="side-nav-open border-radius-0 card">
-          <NavLink to="/" end className="d-flex justify-content-center sticky-top bg-white">
-            <img src={logo} className="logo"/>
-          </NavLink>
+      <div ref={(div) => { sideNavRef = div }} className="side-nav-open border-radius-0 card">
+        <NavLink to="/" end className="d-flex justify-content-center sticky-top bg-white my-3 text-d-n">
+          <div class="text-center d-flex flex-column align-items-center gap-2">
+            <img src={logo} width={38} height={38} alt='logo' />
+            <h3 class="heading-section m-0">InventoCare</h3>
+          </div>
+        </NavLink>
 
-          <Accordion defaultActiveKey={`${isSidebarAccordionActive()}`}>
-            {sidebarItems.map((item, index) => {
-              return item.subMenu.length !== 0 ? (
-                  <Accordion.Item
-                      key={index.toString()}
-                      eventKey={`${index}`}
-                      className="mt-2"
-                  >
-                    <Accordion.Header>
-                      <div className="side-bar-item">
-                        {item.icon}
-                        <span className="side-bar-item-caption">
-                      {item.title}
-                    </span>
-                      </div>
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      {item.subMenu.map((subItem, index) => (
-                          <NavLink
-                              key={index.toString()}
-                              className={(navData) =>
-                                  navData.isActive
-                                      ? 'side-bar-subitem-active side-bar-subitem '
-                                      : 'side-bar-subitem'
-                              }
-                              to={subItem?.url}
-                              end
-                          >
-                            {subItem?.icon}
-                            <span className="side-bar-subitem-caption">
-                        {subItem?.title}
-                      </span>
-                          </NavLink>
-                      ))}
-                    </Accordion.Body>
-                  </Accordion.Item>
-              ) : (
-                  <NavLink
-                      className={(navData) =>
-                          navData.isActive
-                              ? 'side-bar-item-active side-bar-item mt-2'
-                              : 'side-bar-item mt-2'
-                      }
-                      to={'/'}
-                      end
-                  >
+        <Accordion defaultActiveKey={`${isSidebarAccordionActive()}`}>
+          {sidebarItems.map((item, index) => {
+            return item.subMenu.length !== 0 ? (
+              <Accordion.Item
+                key={index.toString()}
+                eventKey={`${index}`}
+                className="mt-2"
+              >
+                <Accordion.Header>
+                  <div className="side-bar-item">
                     {item.icon}
                     <span className="side-bar-item-caption">
+                      {item.title}
+                    </span>
+                  </div>
+                </Accordion.Header>
+                <Accordion.Body>
+                  {item.subMenu.map((subItem, index) => (
+                    <NavLink
+                      key={index.toString()}
+                      className={(navData) =>
+                        navData.isActive
+                          ? 'side-bar-subitem-active side-bar-subitem '
+                          : 'side-bar-subitem'
+                      }
+                      to={subItem?.url}
+                      end
+                    >
+                      {subItem?.icon}
+                      <span className="side-bar-subitem-caption">
+                        {subItem?.title}
+                      </span>
+                    </NavLink>
+                  ))}
+                </Accordion.Body>
+              </Accordion.Item>
+            ) : (
+              <NavLink
+                className={(navData) =>
+                  navData.isActive
+                    ? 'side-bar-item-active side-bar-item mt-2'
+                    : 'side-bar-item mt-2'
+                }
+                to={'/'}
+                end
+              >
+                {item.icon}
+                <span className="side-bar-item-caption">
                   {item.title}
                 </span>
-                  </NavLink>
-              );
-            })}
-          </Accordion>
-        </div>
+              </NavLink>
+            );
+          })}
+        </Accordion>
+      </div>
 
 
-        <div ref={(div) => (contentRef = div)} className="content">
-          {props.children}
-        </div>
-      </Fragment>
+      <div ref={(div) => (contentRef = div)} className="content">
+        {props.children}
+      </div>
+    </Fragment>
   );
 };
 

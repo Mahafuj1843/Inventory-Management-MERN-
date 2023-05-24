@@ -3,26 +3,26 @@ import {createSlice} from "@reduxjs/toolkit";
 export const reportSlice = createSlice({
     name:'report',
     initialState:{
-        SalesByDateList:[],
-        ExpensesByDateList:[],
-        PurchaseByDateList:[],
-        ReturnByDateList:[]
+        SalesByDateRange:[],
+        ExpensesByDateRange:[],
+        PurchaseByDateRange:[],
+        ReturnByDateRange:[]
     },
     reducers:{
-        setSalesByDateList:(state,action)=>{
-            state.SalesByDateList=action.payload
+        setSalesReport:(state,action)=>{
+            state.SalesByDateRange=action.payload
         },
-        setExpensesByDateList:(state,action)=>{
-            state.ExpensesByDateList=action.payload
+        setExpensesReport:(state,action)=>{
+            state.ExpensesByDateRange=action.payload
         },
-        setPurchaseByDateList:(state,action)=>{
-            state.PurchaseByDateList=action.payload
+        setPurchaseReport:(state,action)=>{
+            state.PurchaseByDateRange=action.payload
         },
-        setReturnByDateList:(state,action)=>{
-            state.ReturnByDateList=action.payload
+        setReturnReport:(state,action)=>{
+            state.ReturnByDateRange=action.payload
         }
     }
 })
 
-export  const {setSalesByDateList,setExpensesByDateList,setPurchaseByDateList,setReturnByDateList}=reportSlice.actions;
+export  const {setSalesReport,setExpensesReport,setPurchaseReport,setReturnReport}=reportSlice.actions;
 export default  reportSlice.reducer;

@@ -12,7 +12,6 @@ import ForgetPassPage from "./pages/ForgetPassPage";
 import ResetPassPage from "./pages/ResetPassPage";
 import FullscreenLoader from './components/MasterLayout/FullscreenLoader';
 import { getToken } from './helper/sessionHelper';
-import ProductPage from './pages/ProductPage';
 
 import BrandCreateUpdatePage from "./pages/Brand/BrandCreateUpdatePage";
 import BrandListPage from "./pages/Brand/BrandListPage";
@@ -91,6 +90,7 @@ const App = () => {
             <Route exact path="/SaleReportPage" element={<SalesReportPage />} />
             <Route exact path="/ExpenseReportPage" element={<ExpenseReportPage />} />
 
+            <Route path="*" element={<Page404 />} />
           </Routes>
         </BrowserRouter>
         <FullscreenLoader/>

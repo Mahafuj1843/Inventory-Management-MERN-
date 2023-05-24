@@ -20,7 +20,6 @@ const ProductCreateUpdate = () => {
     (async () => {
       categoryDropdownRequest()
       brandDropdownRequest()
-      store.dispatch(resetFormInput())
       if (params.id) {
         productDetailsRequest(params.id)
       } else {
@@ -32,14 +31,14 @@ const ProductCreateUpdate = () => {
   const onSave = async () => {
     if (IsEmpty(FormValue.title)) {
       ErrorToast("Product name requried.")
-    }if (IsEmpty(FormValue.categoryId)) {
+    }else if (IsEmpty(FormValue.categoryId)) {
       ErrorToast("Category requried.")
-    }if (IsEmpty(FormValue.brandId)) {
+    }else if (IsEmpty(FormValue.brandId)) {
       ErrorToast("Brand requried.")
-    }if (IsEmpty(FormValue.unit)) {
+    }else if (IsEmpty(FormValue.unit)) {
       ErrorToast("Unit requried.")
-    }if (IsEmpty(FormValue.Details)) {
-      ErrorToast("Details name requried.")
+    }else if (IsEmpty(FormValue.desc)) {
+      ErrorToast("Details requried.")
     } else {
       if (params.id) {
         if (await updateProductRequest(FormValue, params.id)) {

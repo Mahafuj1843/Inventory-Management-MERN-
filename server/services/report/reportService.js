@@ -9,7 +9,7 @@ export const expenseReportService= async (Req, Model) => {
                     Total:[{
                         $group:{
                             _id:0,
-                            totalAmount:{$sum:"$amount"}
+                            totalAmount:{$sum:"$total"}
                         }
                     }],
                     Rows:[

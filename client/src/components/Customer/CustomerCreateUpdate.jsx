@@ -70,7 +70,7 @@ const CustomerCreateUpdate = () => {
                                     </div>
                                     <div className="col-12 p-2">
                                         <label className="form-label">Address</label>
-                                        <textarea onChange={(e)=>{store.dispatch(onChangeCustomerInput({name: "address", value:e.target.value}))}} value={FormValue.address}  className="form-control form-control-sm" rows={4}/>
+                                        <textarea autoCorrect='off' onChange={(e)=>{store.dispatch(onChangeCustomerInput({name: "address", value:e.target.value}))}} value={FormValue.address}  className="form-control form-control-sm" rows={4}/>
                                     </div>
                                 </div>
                                 <div className="row">
